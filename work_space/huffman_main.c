@@ -2,26 +2,23 @@
 #include <stdlib.h>
 #include <conio.h>
 
-char* input_dinamis() {
-    int ch, len = 0;
-    int kapasitas = 10;
-    char *str = malloc(kapasitas);
-
-    if (!str) return NULL;
-
-    while ((ch = getchar()) != '\n' && ch != EOF) {
-        str[len++] = ch;
-        if (len >= kapasitas) {
-            kapasitas *= 2;
-            str = realloc(str, kapasitas);
-            if (!str) return NULL;
-        }
-    }
-    str[len] = '\0';
-    return str;
-}
-
 int main(){
-    char *test =input_dinamis();
-    printf("%s",test);
+    // unsigned char buffer[8];
+    // FILE *kancil=fopen("checker.png","rb");
+    // if(kancil == NULL) return 100;
+    // while (fgets(buffer,8,kancil) != NULL){
+    //     for(int i=0;i<8;i++){
+
+    //         if(buffer[i] != '\0')
+    //         printf("%d\n",buffer[i]);
+    //     }
+    // }
+    unsigned char bit=255;
+    printf("%d\n",bit );
+    bit = bit >> 4;
+    printf("%d\n",bit );
+    bit = bit << 4;
+    printf("%d\n",bit );
+    bit = bit >> 4;
+    printf("%d\n",bit );
 }
