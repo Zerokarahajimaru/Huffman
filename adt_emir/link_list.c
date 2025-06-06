@@ -1,16 +1,23 @@
-/* File        : bodyNRSL.c */ 
-/* Deskripsi   : Body prototype ADT Non Restricted Single Linked/Linear list yang hanya dikenali First(L) */
-/* Dibuat oleh : Ade Chandra Nugraha */
-/* Tanggal     : 24-10-2001 */
-//test test
-
-//uhum
 #include <limits.h>
 #include <malloc.h>
 #include "link_list.h"
-#include "BOOLEAN.H"
 #include <stdlib.h>
 #include <stdio.h>
+
+/*
+TODO
+insvfirst ++++ insertfirst ++++
+insertlast ++++
+insvlast ++++
+delfirst ++++
+delvfirst ++++
+delLast ++++
+delvLast ++++
+enqueue ++++
+deque  ++++
+push  ++++
+pop   ++++
+*/
 
 /********** BODY SUB PROGRAM ***********/
 /**** Predikat untuk test keadaan LIST  ****/
@@ -37,11 +44,7 @@ void CreateList (List * L)
 }
 
 /**** Manajemen Memory ****/
-address Alokasi (infotype X)
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address != Nil, 	   */
-/*	dan misalnya menghasilkan P, maka Info(P) = X, Next(P) = Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
+address Alokasi (infotype X,int frekuensi)
 {
 	
 	 /* Kamus Lokal */
@@ -50,10 +53,14 @@ address Alokasi (infotype X)
 	 P = (address) malloc (sizeof (ElmtList));
 	 if (P != Nil)		/* Alokasi berhasil */
 	 {
+	/*ini yang harus diubah apabila subvar nya dikurangi atau ditambah*/
 	Info(P) = X;
 	Next(P) = Nil;
-	 }
-	 return (P);
+	P->prev = NULL;
+	frekuensi(P)=frekuensi;
+	/*ini yang harus diubah apabila subvar nya dikurangi atau ditambah*/
+	}
+	return (P);
 }
 
 void DeAlokasi (address P)
@@ -143,104 +150,146 @@ address SearchPrec (List L, infotype X)
 
 /**** PRIMITIF BERDASARKAN NILAI ****/
 /**** Penambahan Elemen ****/
-void InsVFirst (List * L, infotype X)
+void InsVFirst (List * L, infotype X, int frekuensi)
 /* IS : L mungkin Kosong */
 /* FS : melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 {
 	 /* Kamus Lokal */
 	address P;
-	 /* Algoritma */
-	P=Alokasi(X);
+	/*ubah ini apabila info diubah*/
+	P=Alokasi(X,frekuensi);
+	/*ubah ini apabila info diubah*/
 	if(P != NULL){
 		InsertFirst(L,P);
 	}else{
-		printf("memory penuh -_-");
+		printf("memory penuh -_-\n");
 	}
 }
 
-void InsVLast (List * L, infotype X)
+void InsVLast (List * L, infotype X,int frekuensi)
 /* IS : L mungkin Kosong */
 /* FS : melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir (elemen terakhir adalah yang baru) */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal IS = FS */
 {
-	 /* Kamus Lokal */
-	address P,search;
-	
-	 /* Algoritma */
-	if(First(*L) == NULL){
-		P=(address)malloc(sizeof(ElmtList));
-		Info(P)=X;
-		Next(P)=NULL;
-		First(*L)=P;
-	}else
-	search=First(*L);
-	while(search->next != NULL){
-		search=search->next;
-	}
-	P=(address)malloc(sizeof(ElmtList));
-	Info(P)=X;
-	Next(P)=NULL;
-	search->next=P;
+	InsertLast(L,Alokasi(X,frekuensi));
 }
+
+
+// void InsVLast (List * L, infotype X)
+// /* IS : L mungkin Kosong */
+// /* FS : melakukan alokasi sebuah elemen dan */
+// /* menambahkan elemen list di akhir (elemen terakhir adalah yang baru) */
+// /* bernilai X jika alokasi berhasil. Jika alokasi gagal IS = FS */
+// {
+// 	 /* Kamus Lokal */
+// 	address P,search;
+
+// 	 /* Algoritma */
+// 	if(First(*L) == NULL){
+// 		P=(address)malloc(sizeof(ElmtList));
+// 		Info(P)=X;
+// 		Next(P)=NULL;
+// 		First(*L)=P;
+// 	}else
+// 	search=First(*L);
+// 	while(search->next != NULL){
+// 		search=search->next;
+// 	}
+// 	P=(address)malloc(sizeof(ElmtList));
+// 	Info(P)=X;
+// 	Next(P)=NULL;
+// 	search->next=P;
+// }
+
+
+
+
+
+
 	 //Buatkan algoritma sesuai spesifikasi modul ini
 
 /**** Penghapusan Elemen ****/
-void DelVFirst (List * L, infotype * X)//yang ini masih salah bu perlu perbaikan;
+// void DelVFirst (List * L, infotype * X,int * frekuensi)//yang ini masih salah bu perlu perbaikan
+// /* IS : L TIDAK Kosong */
+// /* FS : Elemen pertama List dihapus, nilai info disimpan ke X */
+// /* 	dan alamat elemen pertama di dealokasi */
+// {
+// 	/* Kamus Lokal */
+// 	address P;
+// 	 /* Algoritma */
+// 	if( First(*L)->next != NULL){
+// 	P=(address)malloc(sizeof(ElmtList));
+// 	*X=First(*L)->info;
+// 	Next(P)=First(*L);
+// 	First(*L)=First(*L)->next;
+// 	free(First(*L));
+// 	free(P);
+// 	}
+// 	else{
+// 		P=First(*L);
+// 		*X = Info(P);
+// 		free(P);
+// 		First(*L)=NULL;
+
+// 	}
+// 	}
+// 	 //Buatkan algoritma sesuai spesifikasi modul ini
+
+
+void DelVFirst (List * L, infotype * X,int * frekuensi)//yang ini masih salah bu perlu perbaikan
 /* IS : L TIDAK Kosong */
 /* FS : Elemen pertama List dihapus, nilai info disimpan ke X */
 /* 	dan alamat elemen pertama di dealokasi */
 {
-	 /* Kamus Lokal */
-	address P;
+	/* Kamus Lokal */
+	address P = NULL;
 	 /* Algoritma */
-	if( First(*L)->next != NULL){
-	P=(address)malloc(sizeof(ElmtList));
-	*X=First(*L)->info;
-	Next(P)=First(*L);
-	First(*L)=First(*L)->next;
-	free(First(*L));
-	free(P);
-	}
-	else{
-		P=First(*L);
-		*X = Info(P);
+	DelFirst(L,&P);
+	if(P != NULL){	
+		*frekuensi=frekuensi(P);
+		*X=Info(P);
 		free(P);
-		First(*L)=NULL;
-
 	}
-	}
-	 //Buatkan algoritma sesuai spesifikasi modul ini
-
-
-void DelVLast (List * L, infotype * X)
-/* IS : L TIDAK Kosong */
-/* FS : Elemen terakhir list dihapus : nilai info disimpan pada X */
-/* 	dan alamat elemen terakhir di dealokasi */
-{
-	 /* Kamus Lokal */
-	address Prec;
-	
-	 /* Algoritma */
-	 if(First(*L) != NULL && First(*L)->next == NULL){
-	 	Prec=First(*L);
-	 	*X=Prec->info;
-	 	First(*L)=NULL;
-	 	free(Prec);
-	 }
-	 else {
-	 if(First(*L) != NULL && First(*L)->next != NULL){
-	 	Prec=First(*L);
-	 	while(Prec->next->next !=NULL){
-	 		Prec=Prec->next;
-		 }
-		 *X=Prec->next->info;
-		 free(Prec->next);
-	 }
-	 }
-	 //Buatkan algoritma sesuai spesifikasi modul ini
 }
+	 //Buatkan algoritma sesuai spesifikasi modul ini
+
+
+void DelVLast (List * L, infotype * X,int *frekuensi)
+{
+	address P=NULL;
+	DelLast(L,&P);
+	if(P != NULL){
+		*X=P->info;
+		*frekuensi=P->frekuensi;
+		free(P);
+	}
+}
+
+
+// void DelVLast (List * L, infotype * X,int *frekuensi)
+// {
+// 	 /* Kamus Lokal */
+// 	address Prec;
+// 	 /* Algoritma */
+// 	 if(First(*L) != NULL && First(*L)->next == NULL){
+// 	 	Prec=First(*L);
+// 	 	*X=Prec->info;
+// 	 	First(*L)=NULL;
+// 	 	free(Prec);
+// 	 }
+// 	 else {
+// 	 if(First(*L) != NULL && First(*L)->next != NULL){
+// 	 	Prec=First(*L);
+// 	 	while(Prec->next->next !=NULL){
+// 	 		Prec=Prec->next;
+// 		 }
+// 		 *X=Prec->next->info;
+// 		 free(Prec->next);
+// 	 }
+// 	 }
+// }
 
 
 /**** PRIMITIF BERDASARKAN ALAMAT ****/
@@ -252,9 +301,19 @@ void InsertFirst (List * L, address P)         //adhasbkjdbjbkhab
 {
 	if (L->First == NULL){
 		L->First = P;
+		/*ubah di sini apabila merubah list jadi circulated*/
+		
+		/*ubah di sini apabila merubah list jadi circulated */
 	}else{
-		Next(P)=L->First;
-		L->First=P;
+		if(P != NULL){	
+			Next(P)=L->First;
+			/*apabila circulated ubah part ini*/
+			P->prev=NULL;
+			/*apabila circulated ubah part ini*/
+			L->First->prev=P;
+			L->First=P;
+			
+		}
 	}
 	
 }
@@ -276,16 +335,17 @@ void InsertLast (List * L, address P)
 /* IS : L sembarang, P sudah dialokasi */
 /* FS : P ditambahkan sebagai elemen terakhir yang baru */
 {
+	address temp=NULL;
 	if(First(*L) == NULL){
 		First(*L) = P;
 	}else{
-	address temp=First(*L);
+	temp=First(*L);
 		while(temp->next!=NULL){
 			temp=temp->next;
 		}
 		temp->next=P;
+		P->prev=temp;
 	}
-	
 }
 
 /**** Penghapusan sebuah elemen ****/
@@ -301,14 +361,14 @@ if(First(*L) != NULL){
 	if(First(*L)->next == NULL){
 		*P=L->First;
 		First(*L)=NULL;
-		
 	}else{
 		del=First(*L);
 		First(*L)=First(*L)->next;
 		del->next=NULL;
+		del->prev=NULL;
 		*P=del;
 		}
-	}
+	}else if(First(*L) == NULL)*P ==NULL;
 }
 
 
@@ -348,14 +408,12 @@ void DelP (List * L, infotype X)
 }
 
 void DelLast (List * L, address * P)
-/* IS : L TIDAK kosong */
-/* FS : P adalah alamat elemen terakhir list sebelum penghapusan */
-/*	Elemen list berkurang satu (mungkin menjadi kosong) */
-/* Last elemen baru adalah predesessor elemen terakhir yang lama, jika ada */
 {
 	 /* Kamus Lokal */
 	address Del,Prec_bf;
 	
+ 	if(First(*L) == NULL) {*P = NULL; return;}
+
 	 /* Algoritma */
 	 if(First(*L) != NULL && First(*L)->next == NULL){
 	 	*P=First(*L);
@@ -369,11 +427,10 @@ void DelLast (List * L, address * P)
 	 		Del=Del->next;
 		 }
 		 Prec_bf->next=NULL;
+		 Del->prev= NULL;
 		 *P=Del;
-		 
 	 }
-	 }
-	 //Buatkan algoritma sesuai spesifikasi modul ini
+	}
 }
 
 void DelAfter (List * L, address Pdel, address Prec)//fix udah bener

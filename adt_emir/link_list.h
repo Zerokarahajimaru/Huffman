@@ -7,20 +7,21 @@
 
 #ifndef LINK_LIST_H
 #define LINK_LIST_H
-#include "BOOLEAN.h"
-#define Nil NULL
+#include "BOOLEAN.H"
 #define Info(P) (P)->info
 #define Next(P) (P)->next
 #define First(L) (L).First
+#define frekuensi(anjay) (anjay)->frekuensi
 
 
-typedef int infotype;
-typedef char *Nama;
+typedef char infotype;
 typedef struct ElmList *address;
 typedef struct ElmList {
-	 Nama name;
-	 infotype nilai;
+	 address prev;
+	 int frekuensi;
+	 //^^untuk menghitung infonya ada berapa
 	 infotype  info;
+	 //^^untuk menampung char di dalam bintree
 	 address next;
 	 } ElmtList;
 
@@ -28,7 +29,7 @@ typedef struct ElmList {
 /* List kosong ===> First(L) = Nil */
 /* Setiap elemen dengan address P dapat diacu info(P) dan Next(P);  */
 /* Elemen terakhir list ===> Jika addressnya Last maka Next(Last) = Nil */
-typedef struct {
+typedef struct list_linked_list{
 	  address First;
 } List;
 
@@ -43,7 +44,7 @@ void CreateList (List * L);
 /* FS : Terbentuk List Kosong */
 
 /**** Manajemen Memory ****/
-address Alokasi (infotype X);
+address Alokasi (infotype X,int frekuensi);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address != Nil, 	   */
 /*	dan misalnya menghasilkan P, maka Info(P) = X, Next(P) = Nil */
@@ -75,24 +76,24 @@ address SearchPrec (List L, infotype X);
 
 /**** PRIMITIF BERDASARKAN NILAI ****/
 /**** Penambahan Elemen ****/
-void InsVFirst (List * L, infotype X);
+void InsVFirst (List * L, infotype X,int frekuensi);
 /* IS : L mungkin Kosong */
 /* FS : melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 
-void InsVLast (List * L, infotype X);
+void InsVLast (List * L, infotype X,int frekuensi);
 /* IS : L mungkin Kosong */
 /* FS : melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir (elemen terakhir adalah yang baru) */
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal IS = FS */
 
 /**** Penghapusan Elemen ****/
-void DelVFirst (List * L, infotype * X);
+void DelVFirst (List * L, infotype * X,int *frekuensi);
 /* IS : L TIDAK Kosong */
 /* FS : Elemen pertama List dihapus, nilai info disimpan ke X */
 /* 	dan alamat elemen pertama di dealokasi */
 
-void DelVLast (List * L, infotype * X);
+void DelVLast (List * L, infotype * X,int *frekuensi);
 /* IS : L TIDAK Kosong */
 /* FS : Elemen terakhir list dihapus : nilai info disimpan pada X */
 /* 	dan alamat elemen terakhir di dealokasi */
