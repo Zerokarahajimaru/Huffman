@@ -52,7 +52,7 @@ boolean is_Full (Queue *L)
 /*Melekukan insertion pada queue*/
 void EnQueue (Queue *L, infotype X,int frekuensi)
 {
-    if(is_Full(L)) {    printf("stack sudah penuh\n"); return; }
+    // if(is_Full(L)) {    printf("stack sudah penuh\n"); return; }
 
     address temp=NULL;
 
