@@ -44,27 +44,27 @@ Queue input_dll_to_queue(List dll,Queue *Q){
     }
 }
 
-// BinTree build_tree_from_queue(Queue *q){
-//     BinTree temp=NULL;
-//     BinTree parent=NULL;
+BinTree build_tree_from_queue(Queue *q){
+    BinTree temp=NULL;
+    BinTree parent=NULL;
 
 
-//     if(q == NULL)return NULL;
+    if(q->Front == NULL && q->rear == NULL)return NULL;
     
-//     //parameter dequeue dimasukan 
-//     parent=Alokasi()
-//     if(parent != NULL){
-//         parent->left = dequeue();
-//         parent->right = dequeue();
-//         parent->frekuensi = parent->left->frekuensi + parent->right->frekuensi;
-//     }
+    //parameter dequeue dimasukan 
+    parent=Alokasi_tree(255/*info*/,0/*frekuensi*/,0/*representasi*/);
+    if(parent != NULL){
+        parent->left = deQueue(q,parent->left->info,parent->left->frekuensi);
+        parent->right = deQueue(q,parent->right->info,parent->right->frekuensi);
+        parent->frekuensi = parent->left->frekuensi + parent->right->frekuensi;
+    }
         
-//     while(parent != NULL && q != NULL){
-//         temp = parent;
-//         parent = Alokasi();
-//     } 
+    while(parent != NULL && q != NULL){
+        temp = parent;
+        parent = Alokasi_tree();
+    } 
     
-// }
+}
 
 // TODO sorting ini dia time complexnya  sigam n
 
