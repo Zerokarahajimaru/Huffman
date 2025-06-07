@@ -16,21 +16,30 @@
 #define InfoList(L) (L)->info
 #define Next(L) (L)->next
 
-typedef int infotype;
+typedef char infotype;
+typedef infotype esu;
+
+//untuk representasi
+typedef char *tagetto;
+typedef tagetto na;
+
 typedef struct tElmtTree *address;
 typedef struct tElmtTree {
 	infotype info;
+	int frekuensi;
+	na represintasi;
 	address left, right;
 } Node;
 
-typedef struct tElmtList *address1;
-typedef struct tElmtList {
-	infotype info;
-	address1 next;
-} ElmtList;
-
 typedef address BinTree;
-typedef address1 ListOfNode;
+
+// typedef struct tElmtList *address1;
+// typedef struct tElmtList {
+// 	infotype info;
+// 	address1 next;
+// } ElmtList;
+
+// typedef address1 ListOfNode;
 
 
 /**** Primitif *****/
