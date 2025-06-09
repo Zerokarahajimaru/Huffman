@@ -145,28 +145,60 @@ void insert_bit_and_representation(BinTree T,unsigned char *representasi/*buat m
     }
 }
 
-typedef struct HuffmanHeader{
-    char extension[5];
-    int sum;
-    char info;
-    char *repesentation;
-}huffmanheader;
 
-FILE * input_header(BinTree T,char * namefile){
+
+void input_header(BinTree T,char * namefile,FILE * NotEncodeFile){
     if(T != NULL) return NULL;
+    
+    const unsigned char space =' ';
+    const unsigned char newline ='\n';
+    unsigned char NotEncoded_buffer[2];
+    unsigned char *P_representation=NULL;
+    unsigned char representation_bit=0;
+    unsigned char bit=0;
+    unsigned char representation_i=0;
 
     huffmanheader hfh;
-    FILE * DecodeFile =fopen(namefile,"wb");
+    FILE * EncodedFile =fopen(namefile,"wb");
     
-    strcpy(hfh.extension ,".hfm");
+    strcpy(hfh.extension ,".hfm");//ini benerin oy
     hfh.sum=nbElmt(T);
 
     //1.masukin ekstensi 2. sumnya terus close file bukan dengan append untuk memasukan info dan representasinya
+    fclose(EncodedFile);
+    EncodedFile=fopen(namefile,"ab");
+    traversal_untuk_mencari_info_dan_representation_dan_masukan_ke_file(T,EncodedFile);
+
+    //bagian convert image to bit representation
+    fwrite((unsigned char *)&newline,sizeof(unsigned char),1,EncodedFile);
+    while(fgets(NotEncoded_buffer,2,NotEncodeFile != NULL)){
+        conversion_of_image_to_text(T,&P_representation,&representation_bit,NotEncoded_buffer[0]);
+        if(representation_bit > 8){
+            representation_i +=1;
+            representation_bit -=8;
+        }
+        if(representation_i > 0){
+            bit += 8;
+            representation_i -= 1;
+        }
+    }
 }
 
-    void traversal_untuk_mencari_info_dan_representation_dan_masukan_ke_file(BinTree T){
+void conversion_of_image_to_text(BinTree T,unsigned char **representation,unsigned char *bit,unsigned char info){
+    
+    if(T == NULL)return;
+
+    
+}
+
+
+
+    void traversal_untuk_mencari_info_dan_representation_dan_masukan_ke_file(BinTree T,FILE * huffman_append_mode)/*nanti di input header opennya memakai append mode biner kalo ada*/{
+        huffmanheader hfh;
         unsigned char byte = 1;
         unsigned bit=T->bit;
+        const unsigned char space =' ';
+        const unsigned char newline ='\n';
 
         if(bit == 0)byte =0;
         else{
@@ -176,18 +208,20 @@ FILE * input_header(BinTree T,char * namefile){
             }
         }
 
+        hfh.info=T->info;
+        //hfh.info dimasukin ke file
+        fwrite((unsigned char *)&newline,sizeof(unsigned char),1,huffman_append_mode);
+        fwrite((unsigned char *)&(T->info),sizeof(unsigned char),1,huffman_append_mode);
+        fwrite((unsigned char *)&space,sizeof(unsigned char),1,huffman_append_mode);
+       
         for(int i=0;i<byte;i++){
-            hfh.repesentation=T->representasi[i];
+            hfh.repesentation=&(T->representasi[i]);
+            //hfh.representation dimasukin ke file:
+            fwrite((unsigned char *)hfh.repesentation,sizeof(unsigned char),1,huffman_append_mode);
         }
-
-            hfh.info=T->info;
-            fwrite();
 
         traversal_untuk_mencari_info_dan_representation_dan_masukan_ke_file(T->left);
         traversal_untuk_mencari_info_dan_representation_dan_masukan_ke_file(T->right);
     }
 
 
-void conversion_of_image_to_text(){
-    
-}
