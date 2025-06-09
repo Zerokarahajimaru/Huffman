@@ -14,7 +14,7 @@
 #define frekuensi(anjay) (anjay)->frekuensi
 
 
-typedef char infotype;
+typedef unsigned char infotype;
 typedef struct ElmList *address;
 typedef struct ElmList {
 	 address prev;

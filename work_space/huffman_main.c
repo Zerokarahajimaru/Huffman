@@ -51,6 +51,7 @@ void main(){
     List head_dll;
     Stack S;
     Queue Q;
+    BinTree T;
     FILE *encoding_target = NULL;
 
     int choice=0;
@@ -59,28 +60,32 @@ void main(){
     //set adt ke NULL syarat dapat menjalankan adt yang telang dibuat
     S.First=NULL;
     head_dll.First = NULL;
+    T=NULL;
     CreateQueue(&Q);
 
-        encoding_target= fopen("../misc/Wallpaper-Steinsgate-Anime-Girls-Makise-Kurisu-Tie-St4.jpg","rb");
+        encoding_target= fopen("../misc/sang_kacil.txt","rb");
         if(encoding_target == NULL) return;
         input_to_ll(&head_dll,encoding_target);
 
         
         address temp=head_dll.First;
         selection_sort((head_dll.First));
-        while(temp != NULL){
-            printf("info =%d\n",temp->info);
-            printf("frekuensi=%d\n",temp->frekuensi);
-            temp=temp->next;
-        }
+        // while(temp != NULL){
+        //     printf("info =%d\n",temp->info);
+        //     printf("frekuensi=%d\n",temp->frekuensi);
+        //     temp=temp->next;
+        // }
 
         input_dll_to_queue(head_dll,&Q);
         temp=Q.Front;
-                while(temp != NULL){
-            printf("Q info =%d\n",temp->info);
-            printf("Q frekuensi=%d\n",temp->frekuensi);
-            temp=temp->next;
-        }   
+        //         while(temp != NULL){
+        //     printf("Q info =%d\n",temp->info);
+        //     printf("Q frekuensi=%d\n",temp->frekuensi);
+        //     temp=temp->next;
+        // } 
+         T=build_tree_from_queue(&Q);
+         if(T != NULL)PreOrder(T);
+         
     }
 
 

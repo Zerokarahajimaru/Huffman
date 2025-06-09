@@ -4,6 +4,7 @@
 #include "../adt_emir/link_list.h"
 #include "../adt_emir/stack.h"
 #include "../adt_emir/Queue.h"
+#include "../adt_emir/bintree.h"
 
 void main_menu();
 
@@ -11,7 +12,7 @@ void input_to_ll(List *head,FILE *zip_target);
 
 Queue input_dll_to_queue(List dll,Queue *Q);
 
-// BinTree build_tree_from_queue(Queue *q);
+BinTree build_tree_from_queue(Queue *q);
 
 void selection_sort(address p);
 

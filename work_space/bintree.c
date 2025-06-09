@@ -1,45 +1,48 @@
-#include "bintree.h"
+#include "../adt_emir/bintree.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 /*selektor*/
-infotype Getakar(BinTree P){
-    return Info(P);
+esu Getakar(BinTree P){
+    return InfoTree(P);
 }
 BinTree GetLeft(BinTree P){
-    if(IsUnerLeft(P) !=false )return Left(P);
+    if(IsUnerLeft(P) !=false )return LeftTree(P);
     return NULL;
 }
 
 BinTree GetRight(BinTree P){
-    if(IsUnerRight(P) !=false)return Right(P);
+    if(IsUnerRight(P) !=false)return RightTree(P);
     return NULL;
 }
 /*selektor*/
 
 /*konstsruktor*/
-address Alokasi(infotype X){
-    address T=(address)malloc(sizeof(Node));
+pnode Alokasi_Tree(esu X,int frekuensi){
+    pnode T=(pnode)malloc(sizeof(Node));
     if(T != NULL){
-        Info(T)=X;//bagian yang harus diubah apabila infotype dirubah
-        Left(T)=NULL;
-        Right(T)=NULL;
+        //bagian yang harus diubah apabila infotype dirubah
+        InfoTree(T)=X;
+        T->frekuensi=frekuensi;
+
+        LeftTree(T)=NULL;
+        RightTree(T)=NULL;
         return T;
     }else return NULL;
 }
 
-//mengembalikan root yang left dan right nya bisa costumisasi
-BinTree Tree(infotype Akar, BinTree L, BinTree R){
-    BinTree P=Alokasi(Akar);
+//mengembalikan root yang LeftTree dan RightTree nya bisa costumisasi
+BinTree Tree(esu Akar,int frekuensi, BinTree L, BinTree R){
+    BinTree P=Alokasi_Tree(Akar,frekuensi);
     if(P != NULL){
-        Left(P)=L;
-        Right(P)=R;
+        LeftTree(P)=L;
+        RightTree(P)=R;
         return P;
     }else return NULL;
 }
 //omak 
-void MakeTree (infotype Akar, BinTree L, BinTree R, BinTree *P){
-    *P=Tree(Akar,L,R);
+void MakeTree (esu Akar,int frekuensi, BinTree L, BinTree R, BinTree *P){
+    *P=Tree(Akar,frekuensi,L,R);
 }
 
 //nilai di input oleh user 
@@ -50,12 +53,12 @@ void BuildTree(BinTree *P){
 
 /*predikat penting*/
 boolean IsUnerLeft(BinTree P){
-    if(Left(P) != NULL) return true;
+    if(LeftTree(P) != NULL) return true;
     return false;
 }
 
 boolean IsUnerRight(BinTree P){
-    if(Right(P) != NULL) return true;
+    if(RightTree(P) != NULL) return true;
     return false;
 }
 
@@ -64,7 +67,7 @@ boolean IsBiner(BinTree P){
     return false;
 }
 
-boolean IsEmpty(BinTree P){
+boolean IsEmptyTree(BinTree P){
     if(IsUnerLeft(P) != true  && IsUnerRight(P) != true) return true;
     return false;
 }
@@ -72,52 +75,54 @@ boolean IsEmpty(BinTree P){
 
 void PreOrder(BinTree P){
     /*alur algoritmanya*/
-    //1.dia akan menelursui left son sampe habis dan sambil diproses
-    // 2.kalo sudah engga ada left son dia akan ke right son 
-    // 3.dia akan check left son ada engga
+    //1.dia akan menelursui LeftTree son sampe habis dan sambil diproses
+    // 2.kalo sudah engga ada LeftTree son dia akan ke RightTree son 
+    // 3.dia akan check LeftTree son ada engga
     // 4.dan rekursif selesai saat berada di root tapi root nya engga di proses lagi
     if(P == NULL)return;
     
-    printf("%d\n",Info(P));//info(P);
-    PreOrder(Left(P));
-    PreOrder(Right(P));
+    printf("info = %d\n",InfoTree(P));//InfoTree(P);
+    printf("frekuensi = %d\n",P->frekuensi);//InfoTree(P);
+    PreOrder(LeftTree(P));
+    PreOrder(RightTree(P));
 }
 
 void PostOrder(BinTree P){
     /*alur algoritmanya*/
-    // 1.left son 
-    // 2.right son 
+    // 1.LeftTree son 
+    // 2.RightTree son 
     // 3.parent
     // 4.apabila saat mengunjungi parent masih memililki anak maka lakkukan step 1-4
     if(P == NULL)return;
-    PostOrder(Left(P));
-    PostOrder(Right(P));
-    printf("%d\n",Info(P));//info(P)
+    PostOrder(LeftTree(P));
+    PostOrder(RightTree(P));
+    printf("info=%d\n",InfoTree(P));//InfoTree(P);
+    printf("frekuensi=%d\n",P->frekuensi);//InfoTree(P);
 }
 
 void InOrder(BinTree P){
      /*alur algoritmanya*/
-    // 1.left son 
+    // 1.LeftTree son 
     // 2.parent
-    // 3.right son 
+    // 3.RightTree son 
     // 4.apabila saat mengunjungi parent masih memililki anak maka lakkukan step 1-4
     if(P == NULL)return;
 
-    if(IsUnerLeft(P) != false)InOrder(Left(P));
-    printf("%d\n",Info(P));//melakukan aksi bebas aksi nya mau tambah print dan lain lain
-    if(IsUnerRight(P) != false)InOrder(Right(P));
+    if(IsUnerLeft(P) != false)InOrder(LeftTree(P));
+    printf("%d\n",InfoTree(P));//melakukan aksi bebas aksi nya mau tambah print dan lain lain
+    if(IsUnerRight(P) != false)InOrder(RightTree(P));
 }
 /*predikat penting*/
 
 
-boolean Search(BinTree P,infotype X){
+boolean Search_Tree(BinTree P,esu X){
     if(P == NULL)return false;
     boolean status=false;
 
-    if(X == Info(P))status=true;
+    if(X == InfoTree(P))status=true;
 
-    if(IsUnerLeft(P) !=false && status == false) status=Search(Left(P),X);
-    if(IsUnerRight(P) != false && status == false)status=Search(Right(P),X);
+    if(IsUnerLeft(P) !=false && status == false) status=Search_Tree(LeftTree(P),X);
+    if(IsUnerRight(P) != false && status == false)status=Search_Tree(RightTree(P),X);
     return status; 
 }
 
@@ -125,8 +130,8 @@ int nbElmt(BinTree P){//masih belum di optimasi
     //memakai pre order
     if(P == NULL)return 0;
     int i=1;
-    if(IsUnerLeft(P) != false) i=i+nbElmt(Left(P));
-    if(IsUnerRight(P) != false)i=i+nbElmt(Right(P));
+    if(IsUnerLeft(P) != false) i=i+nbElmt(LeftTree(P));
+    if(IsUnerRight(P) != false)i=i+nbElmt(RightTree(P));
     return i;
 }
 
@@ -140,7 +145,7 @@ void LevelOrder (BinTree root){
     int loop=0;
 
     /*****************rootnya di proses ********************/
-    printf("%d\n",Info(root));
+    printf("%d\n",InfoTree(root));
     /*****************rootnya di proses ********************/
     parent_current=(BinTree*)malloc(current_parent*sizeof(struct tElmtTree));
     *parent_current=root;
@@ -188,7 +193,7 @@ void LevelOrder (BinTree root){
     }
 }
 
-void input_bs_tree(BinTree *root,infotype value){
+void input_bs_tree(BinTree *root,esu value){
     BinTree suc=NULL;
     boolean leaf=false;
     if(*root == NULL){
@@ -198,14 +203,14 @@ void input_bs_tree(BinTree *root,infotype value){
         //binary tree with sorting alias binary search tree
         while(leaf == false){
             /*memastikan agar value node tidak sama dengan node yang sudah ada*/
-            if(value == Info(suc))return;//nanti diganti dengan fungsi search agar time complexity berkurang dikarenakan apabila tidak memakai fungsi search dia akan mengcompare 2 kali dan apabila pakai fungsi search hanya sekali apabila value nya itu sama dengan info root
+            if(value == InfoTree(suc))return;//nanti diganti dengan fungsi search agar time complexity berkurang dikarenakan apabila tidak memakai fungsi search dia akan mengcompare 2 kali dan apabila pakai fungsi search hanya sekali apabila value nya itu sama dengan info root
             
             /*untuk operasi mode kiri*/
-            if(value < Info(suc) ){
+            if(value < InfoTree(suc) ){
                 if(IsUnerLeft(suc) == true){
                     suc=GetLeft(suc);
                 }else{
-                Left(suc)=Alokasi(value);
+                LeftTree(suc)=Alokasi(value);
                 leaf =true;
                 }
             }else{
@@ -213,7 +218,7 @@ void input_bs_tree(BinTree *root,infotype value){
                 if(IsUnerRight(suc) == true){
                     suc=GetRight(suc);
                 }else{
-                    Right(suc)=Alokasi(value);
+                    RightTree(suc)=Alokasi(value);
                     leaf = true;
                 }
             }
@@ -221,7 +226,7 @@ void input_bs_tree(BinTree *root,infotype value){
     }
 }
 
-void input_bs_tree_rekursif(BinTree *root,infotype value){
+void input_bs_tree_rekursif(BinTree *root,esu value){
     if(*root == NULL){
         *root=Alokasi(value);/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
         return;
@@ -230,12 +235,12 @@ void input_bs_tree_rekursif(BinTree *root,infotype value){
     BinTree seeker=*root;
 
     //kondisi apa bila sudah ada di leaf siap untuk di tancapkan dan mengalokasikan yang baru;
-    if(Left(seeker) == NULL && value < Info(seeker) ){ Left(seeker) = Alokasi(value); return;} /*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
-    if(Right(seeker) == NULL && value > Info(seeker) ){ Right(seeker) = Alokasi(value); return;}/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/ 
+    if(LeftTree(seeker) == NULL && value < InfoTree(seeker) ){ LeftTree(seeker) = Alokasi(value); return;} /*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
+    if(RightTree(seeker) == NULL && value > InfoTree(seeker) ){ RightTree(seeker) = Alokasi(value); return;}/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/ 
 
     //algoritma
-    if(Left(seeker) != NULL && value < Info(seeker) ) { seeker=Left(seeker); input_bs_tree_rekursif(&seeker,value);}/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
-    if(Right(seeker) != NULL && value > Info(seeker) ) {seeker=Right(seeker); input_bs_tree_rekursif(&seeker,value);}/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
+    if(LeftTree(seeker) != NULL && value < InfoTree(seeker) ) { seeker=LeftTree(seeker); input_bs_tree_rekursif(&seeker,value);}/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
+    if(RightTree(seeker) != NULL && value > InfoTree(seeker) ) {seeker=RightTree(seeker); input_bs_tree_rekursif(&seeker,value);}/*alokasinya bisa dibenerin sesuai kebutuhannanti input parameternya apa*/
 }
 
 //  void PrintTree(BinTree root){
@@ -302,8 +307,8 @@ int nbDaun(BinTree P){
 
     if(IsUnerLeft(P) == false && IsUnerRight(P) == false) ++leaf;
 
-    if(IsUnerLeft(P) != false)leaf += nbDaun(Left(P));
-    if(IsUnerRight(P) != false)leaf += nbDaun(Right(P));
+    if(IsUnerLeft(P) != false)leaf += nbDaun(LeftTree(P));
+    if(IsUnerRight(P) != false)leaf += nbDaun(RightTree(P));
 
     return leaf;
 }
@@ -316,10 +321,10 @@ int Depth(BinTree P){
     int left_depth=0;
     int right_depth=0;
 
-    if(IsUnerLeft(P) != false)left_depth = 1 + Depth(Left(P));
-    if(IsUnerRight(P) != false)right_depth = 1 + Depth(Right(P));
+    if(IsUnerLeft(P) != false)left_depth = 1 + Depth(LeftTree(P));
+    if(IsUnerRight(P) != false)right_depth = 1 + Depth(RightTree(P));
 
-    if(left_depth >= right_depth)return left_depth; //  kita memakai (>=) dikarenakan apabila left dan right depth nya itu sama maka akan terjadi ub dikarenakan fungsi tidak tau ingin mengembalikan nilai apa 
+    if(left_depth >= right_depth)return left_depth; //  kita memakai (>=) dikarenakan apabila LeftTree dan right depth nya itu sama maka akan terjadi ub dikarenakan fungsi tidak tau ingin mengembalikan nilai apa 
     if(right_depth >left_depth)return right_depth;
     
 }
