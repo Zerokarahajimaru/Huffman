@@ -54,6 +54,11 @@ void read_compressed_data(FILE *input, FILE *output, HuffmanNode *root, long dat
     clear_stack(&stack);
 }
 
+void print_usage() {
+    printf("Usage:\n");
+    printf("  Decompress: huffman -d input.huf output.bmp\n"); // Hapus opsi kompresi
+}
+
 // Main decompression function
 void decompress_file(const char *input_filename, const char *output_filename) {
     FILE *input = fopen(input_filename, "rb");
