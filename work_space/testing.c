@@ -14,12 +14,14 @@ int main(){
 
 
 
-    unsigned char emir[2];
-    FILE * test=fopen("emir.txt","rb");
-        if(test == NULL) {printf("gagal");return 999;}
-    fgets(emir,2,test);
-    printf("%d",emir[0]);
+    // unsigned char emir[2];
+    // FILE * test=fopen("emir.txt","rb");
+    //     if(test == NULL) {printf("gagal");return 999;}
+    // fgets(emir,2,test);
+    // printf("%d",emir[0]);
 
+    int i = 23 /8;
+    printf("%d",i);
 
 
 

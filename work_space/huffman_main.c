@@ -13,8 +13,10 @@ void main(int argc, char *argv[]){
     Stack S;
     Queue Q;
     BinTree T;
+
     FILE *encoding_target = NULL;
     FILE *decoding_target=NULL;
+    
     int choice=0;
     char file_name[100]={0};
     char clear_buffer[2];
@@ -22,9 +24,11 @@ void main(int argc, char *argv[]){
     S.First=NULL;
     head_dll.First = NULL;
     T=NULL;
-        for(int i=0;i<41;i++){
+    
+    for(int i=0;i<41;i++){
         file_name[i]=0;
     }
+    
     while(1){
         main_menu();
         scanf("%d",&choice);
@@ -58,11 +62,17 @@ void main(int argc, char *argv[]){
             printf("Q frekuensi=%d\n",temp->frekuensi);
             temp=temp->next;
         } 
-         T=build_tree_from_queue(&Q);
-         if(T != NULL)PreOrder(T);
+        mengNULLkan_charP(T);
+        T=build_tree_from_queue(&Q);
+        insert_bit_and_representation(T,(unsigned char *)calloc(1, sizeof(unsigned char)),0);
+
+        if(T != NULL)PreOrder(T);
+
+
         DelAll(&head_dll);
 
         break;
+
       
     case 2:
     printf("program ditutup\n");

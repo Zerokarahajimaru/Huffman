@@ -29,7 +29,9 @@ void selection_sort(address p);
 
 // void conversion_of_image_to_text(BinTree T,unsigned char **representation/*mengambil representasi dari node*/,unsigned char *bit/*dia representasinya berapa bit*/,unsigned char info/*info yang dicari*/);
 
-// void insert_bit_and_representation(BinTree T,unsigned char *representasi/*buat mengambil nilai untuk representasi bukan untuk dipasangkan di next*/,unsigned char bit /*jumlah bit si representasinya*/);
+void insert_bit_and_representation(BinTree T,unsigned char *representasi/*buat mengambil nilai untuk representasi bukan untuk dipasangkan di next*/,unsigned char bit /*jumlah bit si representasinya*/);
+
+void mengNULLkan_charP(BinTree T);
 #endif
 
 

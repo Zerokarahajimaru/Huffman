@@ -81,8 +81,23 @@ void PreOrder(BinTree P){
     // 4.dan rekursif selesai saat berada di root tapi root nya engga di proses lagi
     if(P == NULL)return;
     
-    printf("info = %d\n",InfoTree(P));//InfoTree(P);
+    int byte=1;
+    unsigned char temp=P->bit;
+    while(temp >8){
+        temp -= 8;
+        byte++;
+    }
+
+    printf("info = %d\n",P->info);//InfoTree(P);
     printf("frekuensi = %d\n",P->frekuensi);//InfoTree(P);
+    printf("bit = %d\n",P->bit);//InfoTree(P);
+    if(P->representasi != NULL){
+        for(int i=0 ; i < byte; i++){
+            printf("representasi = %d\n",(P->representasi[i]));//InfoTree(P);
+        }
+    }
+    printf("\n\n");//InfoTree(P);
+    
     PreOrder(LeftTree(P));
     PreOrder(RightTree(P));
 }

@@ -103,47 +103,84 @@ void selection_sort(address p){
         selection_sort(next_node);
 }
     
-// void insert_bit_and_representation(BinTree T,unsigned char *representasi/*buat mengambil nilai untuk representasi bukan untuk dipasangkan di next*/,unsigned char bit /*jumlah bit si representasinya*/){
-//     if(T == NULL)return;
+void insert_bit_and_representation(BinTree T,unsigned char *representasi/*buat mengambil nilai untuk representasi bukan untuk dipasangkan di next*/,unsigned char bit /*jumlah bit si representasinya*/){
+    if(T == NULL)return;
 
-//     const unsigned char left=0;
-//     const unsigned char right=1;
+    const unsigned char left=0;
+    const unsigned char right=1;
 
-//     unsigned char byte = 1;
-//     unsigned char temp = 0;
-//     unsigned char *r = NULL; //tipe datanya nanti diganti dengan linked list:
+    unsigned char byte = 1;
+    unsigned char temp = 0;
+    unsigned char *r = NULL;
+    int i=0;
+    unsigned char byte_temp_l=0;
 
-//     T->bit=bit;
-//     if(bit >0){
+    bit += 1;
+ 
+    temp = bit;
+        while(temp > 8){
+            ++byte;
+            temp=temp-8;
+        }
 
-//         while(bit > 8){
-//             ++byte;
-//             bit=bit-8;
-//         }
-//     }else byte =0;
+    if(T->left != NULL){
+        T->left->bit=bit;
+        if(T->left->info != 255){
+            r = (unsigned char *)calloc(byte, sizeof(unsigned char));
+            //cek apakah alokasinya berhasil
+            if(r != NULL){
+                byte_temp_l = byte;
+                for (i=0;byte_temp_l>= 1; --byte_temp_l){
+                    r[i]=representasi[i];
+                    i++;
+                }
+                if(bit > 0 && bit <=8 ){
+                    r[0]= r[0]  | left << (8 - temp);
+                }else{
+                    r[i]=  r[i]   | left << (8 - temp);
+                }
+                T->left->representasi = r;
+                insert_bit_and_representation(T->left,r,bit);
+            }
+        }else{
+         insert_bit_and_representation(T->left,r,bit);   
+        }
+    }
 
-    
-//     if(T->left != NULL){
-//         if(byte > 0) r = (unsigned char *)calloc(byte* sizeof(unsigned char));
-//         for (int i=0;byte >= 1; --byte ){
-//             r[i]=representasi[i];
-//             i++;
-//         }
-//         temp=left << (8 - bit );
-//         *r = temp | *representasi;
-//         T->representasi = r;
-//         insert_bit_and_representation(T->left,r,bit+1);
-//     }
+    if(T->right != NULL){
+        T->right->bit=bit;
+        if(T->right->info != 255){
+            r = (unsigned char *)calloc(byte, sizeof(unsigned char));
+            //cek apakah alokasinya berhasil
+            if(r != NULL){
+                byte_temp_l = byte;
+                for (i=0;byte_temp_l>= 1; --byte_temp_l){
+                    r[i]=representasi[i];
+                    i++;
+                }
+                if(bit > 0 && bit <=8 ){
+                    r[0]= r[0]  | right << (8 - temp);
+                }else{
+                    r[i]=  r[i]   | right << (8 - temp);
+                }
+                T->right->representasi = r;
+                insert_bit_and_representation(T->right,r,bit);
+            }
+        }else{
+         insert_bit_and_representation(T->right,r,bit);   
+        }
+    }
 
-//     if(T->right != NULL){
-//         if(byte > 0) r = (unsigned char *)calloc(byte * sizeof(unsigned char));
-//         temp=right << (8 - bit );
-//         *representasi = temp | *representasi;
-//         insert_bit_and_representation(T->right,,bit+1);    
-//     }
-// }
+}
 
 
+void mengNULLkan_charP(BinTree T){
+
+    if(T == NULL)return;
+    T->representasi= NULL;
+    mengNULLkan_charP(T->left);
+    mengNULLkan_charP(T->right);
+}
 
 // void input_header(BinTree T,char * namefile,FILE * NotEncodeFile){
 //     if(T != NULL) return NULL;
